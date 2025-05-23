@@ -447,13 +447,12 @@ def download_pdf():
                         clean_parts.append(str(summary['summary']).strip("'\"[]{}"))
                     
                     if 'traveldetails' in summary:
-                       travel_details = str(summary['traveldetails']).strip("'\"[]{}")
-                       clean_parts.append(f"Travel Details: {travel_details}")
-
- 
+                        travel_details = str(summary['traveldetails']).strip("'\"[]{}")
+                        clean_parts.append("Travel Details: " + travel_details)
                     
                     if 'accommodation' in summary:
-                        clean_parts.append(f"Accommodation: {str(summary['accommodation']).strip("'\"[]{}")}") 
+                        accommodation = str(summary['accommodation']).strip("'\"[]{}")
+                        clean_parts.append("Accommodation: " + accommodation)
                     
                     # Join all parts with line breaks
                     clean_summary = "\n\n".join(clean_parts)
