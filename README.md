@@ -1,5 +1,5 @@
   <p align="center">
-  <img width="180" src="static/images/genitrip-new-logo.svg" alt="GeniTrip AI">
+  <img width="180" src="image\Geni_Trip_Logo.png" alt="GeniTrip AI">
   <p align="center">GeniTrip AI: Intelligent Travel Planning System</p>
 </p>
 
