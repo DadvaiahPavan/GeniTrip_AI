@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block title %}Travel Resources - GeniTrip AI{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4">Travel Resources</h1>
+                <p class="lead">Essential tools and information to enhance your travel experience</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="resources-section py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="section-title text-center mb-5">
+                    <h2>Travel Planning Tools</h2>
+                    <p>Useful resources to help you prepare for your journey</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="resource-card h-100">
+                    <div class="card-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h4>Packing Checklist</h4>
+                    <p>Comprehensive packing lists for different types of trips and destinations.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Download PDF</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="resource-card h-100">
+                    <div class="card-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4>Travel Budget Calculator</h4>
+                    <p>Plan your expenses with our interactive budget calculator tool.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Use Calculator</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="resource-card h-100">
+                    <div class="card-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h4>Language Phrasebooks</h4>
+                    <p>Essential phrases in multiple languages for your international travels.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">View Phrasebooks</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="resource-card h-100">
+                    <div class="card-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h4>Offline Maps</h4>
+                    <p>Download maps for offline use during your travels.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Get Maps</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="resource-card h-100">
+                    <div class="card-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h4>Health & Safety Guide</h4>
+                    <p>Important information about travel health, vaccinations, and safety tips.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Read Guide</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="resource-card h-100">
+                    <div class="card-icon">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <h4>Visa Requirements</h4>
+                    <p>Check visa requirements for different countries based on your nationality.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Check Requirements</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="section-title text-center mb-5">
+                    <h2>Travel Guides & E-Books</h2>
+                    <p>In-depth guides to help you explore destinations like a local</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="ebook-card">
+                    <div class="ebook-cover">
+                        <img src="{{ url_for('static', filename='images/resources/india-guide.jpg') }}" alt="Ultimate India Travel Guide" onerror="this.src='https://via.placeholder.com/200x300/4361ee/ffffff?text=India+Guide'">
+                    </div>
+                    <div class="ebook-info">
+                        <h5>Ultimate India Travel Guide</h5>
+                        <p>A comprehensive guide to exploring India's diverse regions.</p>
+                        <a href="#" class="btn btn-sm btn-primary w-100">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="ebook-card">
+                    <div class="ebook-cover">
+                        <img src="{{ url_for('static', filename='images/resources/budget-travel.jpg') }}" alt="Budget Travel Secrets" onerror="this.src='https://via.placeholder.com/200x300/4361ee/ffffff?text=Budget+Travel'">
+                    </div>
+                    <div class="ebook-info">
+                        <h5>Budget Travel Secrets</h5>
+                        <p>Tips and tricks to travel more while spending less.</p>
+                        <a href="#" class="btn btn-sm btn-primary w-100">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="ebook-card">
+                    <div class="ebook-cover">
+                        <img src="{{ url_for('static', filename='images/resources/photography.jpg') }}" alt="Travel Photography Guide" onerror="this.src='https://via.placeholder.com/200x300/4361ee/ffffff?text=Photography+Guide'">
+                    </div>
+                    <div class="ebook-info">
+                        <h5>Travel Photography Guide</h5>
+                        <p>Capture stunning travel memories with these photography tips.</p>
+                        <a href="#" class="btn btn-sm btn-primary w-100">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="ebook-card">
+                    <div class="ebook-cover">
+                        <img src="{{ url_for('static', filename='images/resources/food-guide.jpg') }}" alt="World Food Guide" onerror="this.src='https://via.placeholder.com/200x300/4361ee/ffffff?text=Food+Guide'">
+                    </div>
+                    <div class="ebook-info">
+                        <h5>World Food Guide</h5>
+                        <p>Explore global cuisines and food experiences for travelers.</p>
+                        <a href="#" class="btn btn-sm btn-primary w-100">Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="section-title text-center mb-5">
+                    <h2>Useful Travel Apps</h2>
+                    <p>Essential mobile applications to enhance your travel experience</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="app-card">
+                    <div class="app-icon">
+                        <i class="fas fa-map-marked"></i>
+                    </div>
+                    <div class="app-info">
+                        <h5>Maps.me</h5>
+                        <p>Detailed offline maps with navigation for travelers.</p>
+                        <div class="app-links">
+                            <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-android"></i> Android</a>
+                            <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-apple"></i> iOS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="app-card">
+                    <div class="app-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="app-info">
+                        <h5>Google Translate</h5>
+                        <p>Break language barriers with instant translations.</p>
+                        <div class="app-links">
+                            <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-android"></i> Android</a>
+                            <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-apple"></i> iOS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="app-card">
+                    <div class="app-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="app-info">
+                        <h5>XE Currency</h5>
+                        <p>Real-time currency converter for travelers.</p>
+                        <div class="app-links">
+                            <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-android"></i> Android</a>
+                            <a href="#" class="btn btn-sm btn-outline-dark"><i class="fab fa-apple"></i> iOS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="newsletter-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h3>Stay Updated with New Resources</h3>
+                <p>Subscribe to our newsletter to receive the latest travel resources, guides, and tools.</p>
+                <form class="newsletter-form mt-4">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email address" required>
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        color: white;
+        padding: 100px 0 50px;
+        margin-bottom: 40px;
+    }
+    
+    .resource-card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-align: center;
+        position: relative;
+    }
+    
+    .resource-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .card-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 24px;
+    }
+    
+    .ebook-card {
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .ebook-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .ebook-cover {
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .ebook-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+    
+    .ebook-card:hover .ebook-cover img {
+        transform: scale(1.05);
+    }
+    
+    .ebook-info {
+        padding: 20px;
+    }
+    
+    .ebook-info h5 {
+        margin-bottom: 10px;
+        color: #2d3748;
+    }
+    
+    .ebook-info p {
+        font-size: 14px;
+        color: #718096;
+        margin-bottom: 15px;
+    }
+    
+    .app-card {
+        display: flex;
+        background-color: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .app-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .app-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        margin-right: 15px;
+    }
+    
+    .app-info {
+        flex: 1;
+    }
+    
+    .app-info h5 {
+        margin-bottom: 5px;
+        color: #2d3748;
+    }
+    
+    .app-info p {
+        font-size: 14px;
+        color: #718096;
+        margin-bottom: 10px;
+    }
+    
+    .app-links {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .newsletter-form .form-control {
+        height: 50px;
+        border-radius: 25px 0 0 25px;
+    }
+    
+    .newsletter-form .btn {
+        border-radius: 0 25px 25px 0;
+        padding: 10px 20px;
+    }
+</style>
+{% endblock %}

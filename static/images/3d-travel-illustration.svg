@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="600px" viewBox="0 0 800 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="skyGradient">
+            <stop stop-color="#4361ee" offset="0%"></stop>
+            <stop stop-color="#3a0ca3" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="cloudGradient">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#F0F0F0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="planeGradient">
+            <stop stop-color="#f72585" offset="0%"></stop>
+            <stop stop-color="#7209b7" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="earthGradient">
+            <stop stop-color="#4cc9f0" offset="0%"></stop>
+            <stop stop-color="#4895ef" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="landGradient">
+            <stop stop-color="#4cc9f0" offset="0%"></stop>
+            <stop stop-color="#4361ee" offset="100%"></stop>
+        </linearGradient>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="10"></feGaussianBlur>
+            <feOffset dx="5" dy="5" result="offsetblur"></feOffset>
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.3"></feFuncA>
+            </feComponentTransfer>
+            <feMerge>
+                <feMergeNode></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    
+    <!-- Background -->
+    <rect width="800" height="600" fill="url(#skyGradient)"></rect>
+    
+    <!-- Clouds -->
+    <g filter="url(#shadow)" class="clouds">
+        <ellipse cx="150" cy="150" rx="70" ry="40" fill="url(#cloudGradient)" opacity="0.8" class="cloud"></ellipse>
+        <ellipse cx="650" cy="100" rx="90" ry="50" fill="url(#cloudGradient)" opacity="0.7" class="cloud"></ellipse>
+        <ellipse cx="300" cy="80" rx="60" ry="30" fill="url(#cloudGradient)" opacity="0.6" class="cloud"></ellipse>
+        <ellipse cx="500" cy="180" rx="80" ry="40" fill="url(#cloudGradient)" opacity="0.7" class="cloud"></ellipse>
+    </g>
+    
+    <!-- Earth -->
+    <g transform="translate(400, 400)" filter="url(#shadow)" class="earth">
+        <circle cx="0" cy="0" r="180" fill="url(#earthGradient)"></circle>
+        
+        <!-- Continents -->
+        <path d="M-100,0 C-80,-40 -40,-60 0,-50 C40,-40 70,-10 90,30 C110,70 90,100 50,110 C10,120 -30,100 -60,70 C-90,40 -120,40 -100,0 Z" fill="url(#landGradient)" opacity="0.8"></path>
+        <path d="M-20,-100 C0,-80 30,-70 50,-40 C70,-10 60,20 30,30 C0,40 -30,20 -40,-10 C-50,-40 -40,-80 -20,-100 Z" fill="url(#landGradient)" opacity="0.8"></path>
+        <path d="M-150,-20 C-130,-40 -100,-30 -80,-10 C-60,10 -70,40 -100,50 C-130,60 -160,40 -170,10 C-180,-20 -170,-50 -150,-20 Z" fill="url(#landGradient)" opacity="0.8"></path>
+    </g>
+    
+    <!-- Plane -->
+    <g transform="translate(300, 250)" filter="url(#shadow)" class="plane">
+        <!-- Plane Body -->
+        <path d="M0,0 L120,20 L140,0 L120,-20 Z" fill="url(#planeGradient)"></path>
+        
+        <!-- Wings -->
+        <path d="M60,0 L70,40 L100,40 L90,0 Z" fill="url(#planeGradient)"></path>
+        <path d="M60,0 L70,-40 L100,-40 L90,0 Z" fill="url(#planeGradient)"></path>
+        
+        <!-- Tail -->
+        <path d="M120,0 L140,30 L150,30 L140,0 Z" fill="url(#planeGradient)"></path>
+        <path d="M120,0 L140,-30 L150,-30 L140,0 Z" fill="url(#planeGradient)"></path>
+        
+        <!-- Windows -->
+        <circle cx="30" cy="0" r="5" fill="white" opacity="0.8"></circle>
+        <circle cx="50" cy="0" r="5" fill="white" opacity="0.8"></circle>
+        <circle cx="70" cy="0" r="5" fill="white" opacity="0.8"></circle>
+        <circle cx="90" cy="0" r="5" fill="white" opacity="0.8"></circle>
+    </g>
+    
+    <!-- Flight Path -->
+    <path d="M150,350 C250,300 350,280 450,300 C550,320 650,380 750,450" stroke="white" stroke-width="3" stroke-dasharray="10,10" fill="none" opacity="0.6" class="flight-path"></path>
+    
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fly {
+            0% { transform: translate(0, 0) rotate(0); }
+            100% { transform: translate(100px, -50px) rotate(5deg); }
+        }
+        
+        @keyframes drift {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+            100% { transform: translateX(0); }
+        }
+        
+        @keyframes dash {
+            to { stroke-dashoffset: 100; }
+        }
+        
+        .earth {
+            animation: float 8s ease-in-out infinite;
+            transform-origin: center;
+        }
+        
+        .plane {
+            animation: fly 4s ease-in-out alternate infinite;
+        }
+        
+        .cloud {
+            animation: drift 10s ease-in-out infinite;
+        }
+        
+        .flight-path {
+            stroke-dashoffset: 0;
+            animation: dash 30s linear infinite;
+        }
+    </style>
+</svg>

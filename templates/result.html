@@ -1,0 +1,975 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Travel Itinerary | GeniTrip AI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+        padding-top: 76px; /* Match the navbar height */
+    }
+
+    /* Results Header Styles */
+    .results-header {
+        background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        color: #fff;
+        padding: 3rem 0 4rem;
+        position: relative;
+        z-index: 1;
+        margin-top: -76px; /* Negative margin to offset body padding */
+        padding-top: 100px; /* Extra padding to ensure content is visible below navbar */
+    }
+
+    .results-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .results-header p {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    /* Trip Summary Card Styles */
+    .trip-summary {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .trip-summary h4 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .summary-item {
+        margin-bottom: 0.75rem;
+    }
+
+    .summary-label {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    /* Travel Details Card Styles */
+    .card-3d {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.5s;
+    }
+
+    .card-3d .card-header {
+        background-color: #3498db;
+        color: #fff;
+        padding: 1rem;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .card-3d .card-body {
+        padding: 1rem;
+        background-color: #fff;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    /* Map Section Styles */
+    .map-container {
+        height: 300px;
+        margin-bottom: 1.5rem;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .map-3d-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        /* Removed transform-style and transition */
+    }
+
+    .map-3d-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    .map-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        opacity: 0;
+        /* Removed transition */
+    }
+
+    /* Removed hover effect */
+
+    /* Itinerary Content Styles */
+    .itinerary-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .itinerary-header {
+        background-color: #3498db;
+        color: #fff;
+        padding: 1rem;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .itinerary-content {
+        padding: 1rem;
+        background-color: #fff;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    /* Day Plan Styles */
+    .day-plan {
+        margin-bottom: 2rem;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .day-header {
+        background-color: #3498db;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .day-content {
+        padding: 1.25rem;
+        background-color: #fff;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .time-block {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px dashed #e9ecef;
+    }
+
+    .time-block:last-child {
+        margin-bottom: 0;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .time-block h6 {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .time-block p {
+        margin-bottom: 0;
+        line-height: 1.6;
+        color: #2c3e50;
+    }
+
+    /* Attractions Section Styles */
+    .attraction-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .attraction-card h5 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .attraction-card p {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    /* Hotels Section Styles */
+    .hotel-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .hotel-card h5 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .hotel-card p {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    /* Animations */
+    .aos-animate {
+        animation-duration: 1s;
+        animation-fill-mode: both;
+    }
+
+    @keyframes fade-up {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-up {
+        animation-name: fade-up;
+    }
+
+    @keyframes fade-left {
+        0% {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .fade-left {
+        animation-name: fade-left;
+    }
+
+    /* Results Watermark */
+    .results-watermark {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 1rem;
+        font-size: 1rem;
+        color: #fff;
+        text-align: right;
+    }
+
+    .results-watermark strong {
+        font-weight: 600;
+    }
+
+    /* Static Map */
+    .static-map {
+        pointer-events: none;
+    }
+    
+    /* Make the entire map container non-interactive */
+    .map-container, 
+    .map-3d-container,
+    .map-overlay {
+        pointer-events: none !important;
+    }
+    
+    /* Hotel card styles */
+    .hotel-clickable {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .hotel-clickable:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-color: #007bff;
+    }
+    
+    .hotel-clickable:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #007bff, #00d2ff);
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.3s ease;
+    }
+    
+    .hotel-clickable:hover:after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+    }
+    
+    .hotel-amenities {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
+    
+    .amenity-badge {
+        background-color: #f8f9fa;
+        color: #495057;
+        font-size: 0.75rem;
+        padding: 3px 8px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+    
+    .view-photos-btn {
+        display: inline-block;
+        color: #007bff;
+        font-weight: 500;
+        font-size: 0.9rem;
+        padding: 5px 15px;
+        border-radius: 20px;
+        background-color: rgba(0, 123, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .hotel-clickable:hover .view-photos-btn {
+        background-color: rgba(0, 123, 255, 0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Results Header -->
+<section class="results-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="mb-2" data-aos="fade-up">Your Travel Itinerary</h1>
+                <p class="lead mb-0" data-aos="fade-up" data-aos-delay="100">{{ source }} to {{ destination }} | {{ start_date }} | {{ num_days }} Days</p>
+            </div>
+            <div class="col-md-4">
+                <div class="action-buttons d-flex justify-content-md-end gap-2 mt-3 mt-md-0" data-aos="fade-left" data-aos-delay="200">
+                    <a href="/download-pdf" class="btn btn-outline-light">
+                        <i class="fas fa-download me-2"></i> Download PDF
+                    </a>
+                    <a href="/" class="btn btn-light">
+                        <i class="fas fa-plane-departure me-2"></i> New Trip
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- GeniTrip AI Watermark -->
+    <div class="results-watermark" data-aos="fade-in" data-aos-delay="300">
+        <span>Powered by</span>
+        <strong>GeniTrip AI</strong>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-4 order-lg-2 mb-4">
+            <!-- Trip Summary Card -->
+            <div class="trip-summary" data-aos="fade-left">
+                <h4>Trip Summary</h4>
+                <div class="summary-item">
+                    <span class="summary-label">From:</span> {{ source }}
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">To:</span> {{ destination }}
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Start Date:</span> {{ start_date }}
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Duration:</span> {{ num_days }} Days
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Travel Mode:</span> 
+                    {% if travel_mode == 'car' %}
+                        <i class="fas fa-car me-1"></i> Car
+                    {% else %}
+                        <i class="fas fa-plane me-1"></i> Flight
+                    {% endif %}
+                </div>
+
+                <!-- Travel Details -->
+                <div class="card-3d mb-4 mt-4">
+                    <div class="card-header bg-primary text-white p-3">
+                        <h5 class="mb-0">
+                            <i class="fas {% if travel_mode == 'car' %}fa-car{% else %}fa-plane{% endif %} me-2"></i>
+                            Travel Details
+                        </h5>
+                    </div>
+                    <div class="card-body p-3">
+                        <!-- Source to Destination -->
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge bg-primary me-2">
+                                <i class="fas {% if travel_mode == 'car' %}fa-car{% else %}fa-plane{% endif %}"></i>
+                            </span>
+                            <span>{{ source }} to {{ destination }}</span>
+                        </div>
+                        
+                        <!-- Car Travel Mode -->
+                        {% if travel_mode == 'car' %}
+                            <!-- Route Options (if available) -->
+                            {% if travel_data and travel_data.get('driving_options') %}
+                            <div class="summary-item">
+                                <span class="summary-label">Route Options:</span>
+                                <ul class="ps-3 mb-0 mt-1">
+                                    {% for route in travel_data.get('driving_options', [])[:3] %}
+                                    <li><strong>{{ route.get('route_name', 'Route') }}:</strong> 
+                                        {{ route.get('distance', '') }} 
+                                        {% if route.get('duration') %}({{ route.get('duration') }}){% endif %}
+                                        {% if route.get('via') %}<br><small>{{ route.get('via') }}</small>{% endif %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Distance (if available) for backward compatibility -->
+                            {% if travel_data and travel_data.get('distance') and not travel_data.get('driving_options') %}
+                            <div class="summary-item">
+                                <span class="summary-label">Distance:</span> {{ travel_data.get('distance') }}
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Duration (if available) for backward compatibility -->
+                            {% if travel_data and travel_data.get('duration') and not travel_data.get('driving_options') %}
+                            <div class="summary-item">
+                                <span class="summary-label">Duration:</span> {{ travel_data.get('duration') }}
+                            </div>
+                            {% endif %}
+                        <!-- Flight Travel Mode -->
+                        {% elif travel_mode == 'flight' %}
+                            <!-- Flight Options (if available) -->
+                            {% if travel_data and travel_data.get('flight_options') %}
+                            <h5 class="mb-3">Recommended Flights</h5>
+                            {% for flight in travel_data.get('flight_options', [])[:2] %}
+                            {% set src_code = flight.get('src_code', source[:3].upper()) %}
+{% if src_code == 'HYD' or 'hyderabad' in source.lower() %}
+    {% set src_code = 'HYD' %}
+{% endif %}
+
+{% set dst_code = flight.get('dst_code', destination[:3].upper()) %}
+{% if dst_code == 'GOA' %}
+    {% set dst_code = 'GOI' %}
+{% elif dst_code == 'BAN' or 'bangalore' in destination.lower() %}
+    {% set dst_code = 'BLR' %}
+{% elif dst_code == 'MUM' or 'mumbai' in destination.lower() %}
+    {% set dst_code = 'BOM' %}
+{% elif dst_code == 'KOC' or 'kochi' in destination.lower() or dst_code == 'KOC' %}
+    {% set dst_code = 'COK' %}
+{% endif %}
+
+{% set date_obj = start_date.split('-') %}
+{% set year = date_obj[0] %}
+{% set month = date_obj[1] %}
+{% set day = date_obj[2] %}
+
+{% set airline = flight.get('airline', '') %}
+{% if 'IndiGo' in airline %}
+    {% set airline_code = '6E' %}
+{% elif 'Air India' in airline %}
+    {% set airline_code = 'AI' %}
+{% elif 'SpiceJet' in airline %}
+    {% set airline_code = 'SG' %}
+{% elif 'Vistara' in airline %}
+    {% set airline_code = 'UK' %}
+{% elif 'GoAir' in airline or 'Go First' in airline %}
+    {% set airline_code = 'G8' %}
+{% elif 'AirAsia' in airline %}
+    {% set airline_code = 'I5' %}
+{% else %}
+    {% set airline_code = flight.get('airline', '')[:2].upper() if flight.get('airline') else '' %}
+{% endif %}
+
+{% set flight_num = flight.get('flight_number', '').replace(airline_code, '').strip() if flight.get('flight_number') else '' %}
+{% if not flight_num and flight.get('flight_number') %}
+    {% set flight_num = flight.get('flight_number').split('-')[1] if '-' in flight.get('flight_number') else flight.get('flight_number') %}
+{% endif %}
+
+{% if flight.get('is_real') and src_code and dst_code %}
+    {% set google_flights_url = 'https://www.google.com/travel/flights/booking?flt=' ~ src_code ~ '.' ~ dst_code ~ '.' ~ year ~ '-' ~ month ~ '-' ~ day %}
+    {% if airline_code and flight_num %}
+        {% set google_flights_url = google_flights_url ~ ';c:' ~ airline_code ~ ':' ~ flight_num %}
+    {% endif %}
+{% else %}
+    {% set google_flights_url = 'https://www.google.com/travel/flights/search?tfs=CBwQAhAAGgwIARIIL20vMGN2dzgaDAj___8BEggvbS8wMmowbSIDSFlEOgNDT0tSA0NPSzoDSFlEYgNIWUSCAQsI____________AUABSAGYAQE&tfu=EgYIARABGAA' %}
+{% endif %}
+                            <div class="glass-card p-3 mb-2 flight-info-static">
+                                <div class="d-flex align-items-center mb-1">
+                                    <strong>{{ flight.get('airline', 'Flight') }}</strong>
+                                    <small class="ms-auto">{{ flight.get('flight_number', '') }}</small>
+                                    <span class="ms-2 text-muted small">({{ src_code }}→{{ dst_code }})</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fw-bold">{{ start_date }}</span><br>
+                                        Departure: {{ flight.get('departure', 'TBD') }}
+                                    </div>
+                                    <small class="text-muted mx-2">{{ flight.get('duration', '') }}</small>
+                                    <div>
+                                        <span class="fw-bold">{{ start_date }}</span><br>
+                                        Arrival: {{ flight.get('arrival', 'TBD') }}
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-1">
+                                    <strong class="text-primary">{{ flight.get('price', '') }}</strong>
+                                    {% if flight.get('is_real') %}
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle me-1"></i> Real-Time Data
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                {% if flight.source %}
+                                <div class="text-end mt-1">
+                                    <small class="text-muted">Source: {{ flight.source }}</small>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <p class="text-muted">No flight options available.</p>
+                            {% endif %}
+                        {% else %}
+                            <p class="text-muted">No detailed travel information available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Recommended Hotel -->
+                <h5 class="mb-3">Recommended Hotel</h5>
+                {% if hotel_data and hotel_data|length > 0 %}
+                {% set hotel = hotel_data[0] %}
+                <div class="glass-card p-3">
+                    <h6 class="mb-1">{{ hotel.name }}</h6>
+                    <div class="small text-muted mb-1">{{ hotel.location }}</div>
+                    <div class="mb-1">
+                        <span class="badge bg-primary">{{ hotel.rating }} / 10</span>
+                        <span class="ms-2 hotel-price">{{ hotel.price }}</span>
+                    </div>
+                    <div class="mt-1">
+                        {% for amenity in hotel.amenities[:2] %}
+                        <span class="amenity-badge me-1">{{ amenity }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <p>No hotel information available</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-8 order-lg-1">
+            <!-- Map Section -->
+            <div class="map-container static-map" data-aos="fade-up">
+                <div class="map-3d-container static-map">
+                    <iframe 
+                        class="static-map"
+                        width="100%" 
+                        height="100%" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        marginheight="0" 
+                        marginwidth="0" 
+                        src="https://maps.google.com/maps?saddr={{ source|replace(' ', '+') }}&daddr={{ destination|replace(' ', '+') }}&ie=UTF8&dirflg={% if travel_mode == 'car' %}d{% else %}f{% endif %}&output=embed"
+                        loading="lazy">
+                    </iframe>
+                    <div class="map-overlay static-map"></div>
+                </div>
+            </div>
+
+            <!-- Itinerary Content -->
+            <div class="itinerary-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="itinerary-header">
+                    <h3>Your Personalized Itinerary</h3>
+                </div>
+                <div class="itinerary-content">
+                    {% set itin = itinerary if itinerary is mapping else {'summary': itinerary|safe, 'travel_details': '', 'accommodation': '', 'daily_plans': []} %}
+                    
+                    {% if itin.summary %}
+                    <div class="trip-overview mb-4">
+                        <h4 class="mb-3">Trip Overview</h4>
+                        <p>{{ itin.summary }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if itin.travel_details %}
+                    <div class="travel-details mb-4">
+                        <h4 class="mb-3">Travel Details</h4>
+                        <p>{{ itin.travel_details }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if itin.accommodation %}
+                    <div class="accommodation mb-4">
+                        <h4 class="mb-3">Accommodation</h4>
+                        <p>{{ itin.accommodation }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if itin.daily_plans %}
+                    <h4 class="mb-3">Daily Itinerary</h4>
+                    {% for day in itin.daily_plans %}
+                    <div class="day-plan mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                        <div class="day-header">
+                            <h5>Day {{ loop.index }}: {{ day.get('date', 'Day ' + loop.index|string) }}</h5>
+                        </div>
+                        <div class="day-content">
+                            {% if day.morning %}
+                            <div class="time-block">
+                                <h6><i class="fas fa-sun"></i> Morning</h6>
+                                <p>{{ day.morning }}</p>
+                            </div>
+                            {% endif %}
+                            
+                            {% if day.afternoon %}
+                            <div class="time-block">
+                                <h6><i class="fas fa-cloud-sun"></i> Afternoon</h6>
+                                <p>{{ day.afternoon }}</p>
+                            </div>
+                            {% endif %}
+                            
+                            {% if day.evening %}
+                            <div class="time-block">
+                                <h6><i class="fas fa-moon"></i> Evening</h6>
+                                <p>{{ day.evening }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Attractions Section -->
+            <h3 class="mt-5 mb-4" data-aos="fade-up">Top Attractions in {{ destination }}</h3>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+                {% for attraction in travel_data.attractions[:4] %}
+                <div class="col" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                    <div class="attraction-card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ attraction.name }}</h5>
+                            <p class="card-text">{{ attraction.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Hotels Section -->
+            <h3 class="mb-4" data-aos="fade-up">Recommended Hotels</h3>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for hotel in hotel_data[:4] %}
+                <div class="col" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                    <div class="hotel-card h-100 hotel-clickable" onclick="window.open('https://www.google.com/search?q=' + encodeURIComponent('{{ hotel.name }} {{ destination }}') + '&tbm=isch', '_blank')">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ hotel.name }} <i class="fas fa-external-link-alt text-primary small"></i></h5>
+                            <div class="mb-2">
+                                <span class="hotel-rating"><i class="fas fa-star text-warning"></i> {{ hotel.rating }} / 10</span>
+                                <span class="hotel-price">{{ hotel.price }}</span>
+                            </div>
+                            <p class="card-text small text-muted"><i class="fas fa-map-marker-alt"></i> {{ hotel.location }}</p>
+                            <div class="hotel-amenities">
+                                {% for amenity in hotel.amenities %}
+                                <span class="amenity-badge">{{ amenity }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="mt-3 text-center">
+                                <span class="view-photos-btn">View Photos <i class="fas fa-camera"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- New: Driving Options (only for car travel) -->
+            {% if travel_mode == 'car' and travel_data.driving_options and travel_data.driving_options|length > 0 %}
+            <div class="mt-4 mb-4">
+                <h5 class="mb-3"><i class="fas fa-road"></i> Driving Options</h5>
+                <div class="row">
+                    {% for option in travel_data.driving_options %}
+                    <div class="col-md-12 mb-2">
+                        <div class="glass-card p-3">
+                            <h6 class="mb-2">{{ option.route_name }}</h6>
+                            <p class="mb-1"><i class="fas fa-road"></i> {{ option.distance }}</p>
+                            <p class="mb-1"><i class="fas fa-clock"></i> {{ option.duration }}</p>
+                            <p class="mb-1"><i class="fas fa-route"></i> {{ option.via }}</p>
+                            
+                            <!-- New: Display Route Path Steps if available -->
+                            {% if option.path_steps %}
+                            <div class="mt-3">
+                                <h6 class="mb-2"><i class="fas fa-map-signs"></i> Route Details:</h6>
+                                <ul class="list-unstyled route-steps">
+                                    {% for step in option.path_steps %}
+                                    <li class="mb-1 small"><i class="fas fa-chevron-right text-primary me-1"></i> {{ step }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Enhanced: Attractions Along Route (only for car travel) -->
+            {% if travel_mode == 'car' and travel_data.route_attractions and travel_data.route_attractions|length > 0 %}
+            <div class="mt-4 mb-4">
+                <h5 class="mb-3"><i class="fas fa-map-marker-alt text-danger"></i> Points of Interest Along the Route</h5>
+                <div class="row">
+                    {% for attraction in travel_data.route_attractions %}
+                    <div class="col-md-12 mb-2">
+                        <div class="glass-card p-3">
+                            <h6 class="mb-1">{{ attraction.name }}</h6>
+                            <div class="d-flex align-items-center mb-1">
+                                <div class="me-2">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <span>{{ attraction.rating }}</span>
+                                </div>
+                                {% if attraction.location_context %}
+                                <div class="ms-2">
+                                    <i class="fas fa-map-pin text-info"></i>
+                                    <span class="small text-muted">{{ attraction.location_context }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <p class="small mb-0">{{ attraction.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Trip Summary Section -->
+<div class="container mt-5 animate__animated animate__fadeIn animate__delay-1s">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="trip-summary shadow-sm">
+                <h4><i class="fas fa-info-circle text-primary me-2"></i>Trip Summary</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="summary-item">
+                            <span class="summary-label">From:</span>
+                            <span>{{ source }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">To:</span>
+                            <span>{{ destination }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Start Date:</span>
+                            <span>{{ start_date }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="summary-item">
+                            <span class="summary-label">Duration:</span>
+                            <span>{{ num_days }} days</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Travel Mode:</span>
+                            <span>{{ travel_mode|capitalize }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Total Estimated Cost:</span>
+                            <span class="text-success fw-bold">₹ {{ "{:,.2f}".format(cost_breakdown|get('total')) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cost Breakdown Section -->
+<div class="container mt-4 animate__animated animate__fadeIn animate__delay-1s">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="itinerary-card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Estimated Trip Cost Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if travel_mode == 'car' %}
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Expense Type</th>
+                                            <th class="text-end">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-gas-pump text-primary me-2"></i>
+                                                    <span>Fuel Cost</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('fuel')) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-hotel text-primary me-2"></i>
+                                                    <span>Accommodation ({{ num_days }} nights)</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('hotel')) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-utensils text-primary me-2"></i>
+                                                    <span>Food & Dining</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('food')) }}</td>
+                                        </tr>
+                                        <tr class="table-success fw-bold">
+                                            <td>Total Estimated Cost</td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('total')) }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <small>Fuel costs are calculated based on the distance ({{ travel_data.get('driving_options', [])[0].get('distance', 'N/A') if travel_data and travel_data.get('driving_options') else "N/A" }}), an average mileage of 15 km/liter, and a fuel price of ₹98 per liter.</small>
+                            </div>
+                            {% else %}
+                            <!-- Flight mode cost breakdown -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Expense Type</th>
+                                            <th class="text-end">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-plane text-primary me-2"></i>
+                                                    <span>Flight Tickets</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('flight')) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-hotel text-primary me-2"></i>
+                                                    <span>Accommodation ({{ num_days }} nights)</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('hotel')) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-utensils text-primary me-2"></i>
+                                                    <span>Food & Dining</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('food')) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-bus text-primary me-2"></i>
+                                                    <span>Local Transportation</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('local_transport')) }}</td>
+                                        </tr>
+                                        <tr class="table-success fw-bold">
+                                            <td>Total Estimated Cost</td>
+                                            <td class="text-end">₹ {{ "{:,.2f}".format(cost_breakdown|get('total')) }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <small>Flight costs are based on the lowest available price. Local transportation costs are estimated at ₹500 per day.</small>
+                            </div>
+                            {% endif %}
+                            <div class="text-center mt-4">
+                                <a href="{{ url_for('download_pdf') }}" class="btn btn-primary">
+                                    <i class="fas fa-file-pdf me-2"></i>Download Itinerary with Cost Breakdown
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Map animations have been removed
+        const mapContainer = document.querySelector('.map-3d-container');
+        if (mapContainer) {
+            // Ensure the map has no transform effects
+            mapContainer.style.transform = 'none';
+            mapContainer.style.boxShadow = 'none';
+        }
+        
+        // Add hover effects to day plans
+        const dayPlans = document.querySelectorAll('.day-plan');
+        dayPlans.forEach(plan => {
+            plan.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateZ(20px)';
+                this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.1)';
+            });
+            
+            plan.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateZ(0)';
+                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
+            });
+        });
+    });
+</script>
+{% endblock %}

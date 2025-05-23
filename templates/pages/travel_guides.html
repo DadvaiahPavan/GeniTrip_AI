@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Travel Guides - GeniTrip AI{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4" style="color: white;">Travel Guides</h1>
+                <p class="lead">Explore our comprehensive guides to popular destinations around the world</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="travel-guides-section py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="section-title text-center mb-5">
+                    <h2>Popular Destinations</h2>
+                    <p>Discover the best experiences at these amazing locations</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- India Destinations -->
+            <div class="col-lg-4 mb-4">
+                <div class="card guide-card h-100">
+                    <img src="{{ url_for('static', filename='images/destinations/goa.jpg') }}" class="card-img-top" alt="Goa Beaches">
+                    <div class="card-body">
+                        <h5 class="card-title">Goa</h5>
+                        <p class="card-text">Explore the beautiful beaches, vibrant nightlife, and Portuguese heritage of India's favorite coastal destination.</p>
+                        <div class="guide-highlights">
+                            <span class="badge bg-primary">Beaches</span>
+                            <span class="badge bg-success">Nightlife</span>
+                            <span class="badge bg-info">Heritage</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-outline-primary">Read Guide</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mb-4">
+                <div class="card guide-card h-100">
+                    <img src="{{ url_for('static', filename='images/destinations/kerala.jpg') }}" class="card-img-top" alt="Kerala Backwaters">
+                    <div class="card-body">
+                        <h5 class="card-title">Kerala</h5>
+                        <p class="card-text">Discover the serene backwaters, lush tea plantations, and rich cultural heritage of God's Own Country.</p>
+                        <div class="guide-highlights">
+                            <span class="badge bg-primary">Backwaters</span>
+                            <span class="badge bg-success">Nature</span>
+                            <span class="badge bg-info">Ayurveda</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-outline-primary">Read Guide</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mb-4">
+                <div class="card guide-card h-100">
+                    <img src="{{ url_for('static', filename='images/destinations/rajasthan.jpg') }}" class="card-img-top" alt="Rajasthan Palaces">
+                    <div class="card-body">
+                        <h5 class="card-title">Rajasthan</h5>
+                        <p class="card-text">Experience the royal heritage, magnificent forts, and vibrant culture of India's largest state.</p>
+                        <div class="guide-highlights">
+                            <span class="badge bg-primary">Palaces</span>
+                            <span class="badge bg-success">Desert</span>
+                            <span class="badge bg-info">Culture</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-outline-primary">Read Guide</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="section-title text-center mb-5">
+                    <h2>Travel Tips & Resources</h2>
+                    <p>Essential information to make your journey smoother</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card resource-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-box me-3">
+                                <i class="fas fa-passport"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Travel Documentation</h5>
+                        </div>
+                        <p class="card-text">Learn about necessary travel documents, visa requirements, and identification needed for domestic and international travel.</p>
+                        <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card resource-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-box me-3">
+                                <i class="fas fa-suitcase-rolling"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Packing Essentials</h5>
+                        </div>
+                        <p class="card-text">Comprehensive packing lists and tips for different destinations, seasons, and trip durations.</p>
+                        <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card resource-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-box me-3">
+                                <i class="fas fa-rupee-sign"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Budget Planning</h5>
+                        </div>
+                        <p class="card-text">Tips for creating travel budgets, saving money on accommodations, transportation, and activities.</p>
+                        <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card resource-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-box me-3">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Health & Safety</h5>
+                        </div>
+                        <p class="card-text">Information on travel insurance, vaccinations, health precautions, and safety tips for various destinations.</p>
+                        <a href="#" class="btn btn-sm btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="newsletter-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h3>Stay Updated with New Travel Guides</h3>
+                <p>Subscribe to our newsletter to receive the latest travel guides, tips, and exclusive offers.</p>
+                <form class="newsletter-form mt-4">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email address" required>
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        color: white;
+        padding: 100px 0 50px;
+        margin-bottom: 40px;
+    }
+    
+    .guide-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    
+    .guide-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .guide-card img {
+        height: 200px;
+        object-fit: cover;
+    }
+    
+    .guide-highlights {
+        margin-top: 15px;
+    }
+    
+    .guide-highlights .badge {
+        margin-right: 5px;
+        padding: 6px 10px;
+    }
+    
+    .resource-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s;
+    }
+    
+    .resource-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .icon-box {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+    }
+    
+    .newsletter-form .form-control {
+        height: 50px;
+        border-radius: 25px 0 0 25px;
+    }
+    
+    .newsletter-form .btn {
+        border-radius: 0 25px 25px 0;
+        padding: 10px 20px;
+    }
+</style>
+{% endblock %}

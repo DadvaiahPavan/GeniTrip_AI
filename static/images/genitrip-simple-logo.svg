@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500" height="300" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4361EE" />
+      <stop offset="100%" stop-color="#3A0CA3" />
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4361EE" />
+      <stop offset="50%" stop-color="#9333EA" />
+      <stop offset="100%" stop-color="#E11D48" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Travel Icons -->
+  
+  <!-- Airplane Icon -->
+  <path d="M125,80 L165,60 L175,70 L145,100 Z" fill="#4361EE"/>
+  <path d="M115,90 L165,60 L175,70 L125,100 Z" fill="#3A0CA3" opacity="0.8"/>
+  
+  <!-- Location Pin Icon -->
+  <path d="M400,90 C383.4,90 370,103.4 370,120 C370,140 400,170 400,170 C400,170 430,140 430,120 C430,103.4 416.6,90 400,90 Z" fill="#4361EE"/>
+  <circle cx="400" cy="120" r="10" fill="white"/>
+  
+  <!-- Car Icon -->
+  <rect x="120" y="190" width="60" height="30" rx="10" fill="#4361EE"/>
+  <rect x="125" y="180" width="50" height="15" rx="5" fill="#3A0CA3" opacity="0.8"/>
+  <circle cx="135" cy="220" r="8" fill="white" stroke="#3A0CA3" stroke-width="2"/>
+  <circle cx="165" cy="220" r="8" fill="white" stroke="#3A0CA3" stroke-width="2"/>
+  
+  <!-- Building/Hotel Icon -->
+  <rect x="380" y="170" width="40" height="60" rx="3" fill="#4361EE"/>
+  <rect x="385" y="175" width="10" height="10" rx="1" fill="white"/>
+  <rect x="405" y="175" width="10" height="10" rx="1" fill="white"/>
+  <rect x="385" y="195" width="10" height="10" rx="1" fill="white"/>
+  <rect x="405" y="195" width="10" height="10" rx="1" fill="white"/>
+  <rect x="395" y="210" width="10" height="20" fill="#3A0CA3" opacity="0.8"/>
+  
+  <!-- Connecting Lines -->
+  <path d="M150,100 L250,140 L400,120" stroke="#4361EE" stroke-width="2" stroke-dasharray="5,5" opacity="0.6"/>
+  <path d="M150,200 L250,140 L400,200" stroke="#4361EE" stroke-width="2" stroke-dasharray="5,5" opacity="0.6"/>
+  
+  <!-- Central Element -->
+  <circle cx="250" cy="140" r="25" fill="#4361EE"/>
+  <path d="M240,130 L260,150 M240,150 L260,130" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Company Name -->
+  <text x="250" y="270" font-family="'Poppins', sans-serif" font-size="30" font-weight="700" text-anchor="middle" fill="url(#textGradient)">GeniTrip AI</text>
+</svg>

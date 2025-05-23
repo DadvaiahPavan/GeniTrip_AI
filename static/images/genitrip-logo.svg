@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Background -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4361EE" />
+      <stop offset="100%" stop-color="#3A0CA3" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3" />
+    </filter>
+  </defs>
+  
+  <!-- Main Circle -->
+  <circle cx="100" cy="100" r="90" fill="url(#logoGradient)" filter="url(#shadow)" />
+  
+  <!-- Abstract Travel Elements -->
+  <!-- Airplane -->
+  <path d="M150 70C150 77.732 143.732 84 136 84C128.268 84 122 77.732 122 70C122 62.268 128.268 56 136 56C143.732 56 150 62.268 150 70Z" fill="white" />
+  
+  <!-- Building/Landmark -->
+  <rect x="85" y="130" width="30" height="40" rx="2" fill="white" />
+  <rect x="92" y="110" width="16" height="20" rx="2" fill="white" />
+  <rect x="97" y="95" width="6" height="15" rx="1" fill="white" />
+  
+  <!-- Road/Path -->
+  <path d="M40 110H85V130H40V110Z" fill="white" />
+  
+  <!-- Car -->
+  <rect x="45" y="85" width="30" height="15" rx="5" fill="white" />
+  <circle cx="50" cy="100" r="5" fill="#4361EE" />
+  <circle cx="70" cy="100" r="5" fill="#4361EE" />
+  
+  <!-- Location Pin -->
+  <path d="M160 120C160 133.255 149.255 144 136 144C122.745 144 112 133.255 112 120C112 106.745 122.745 96 136 96C149.255 96 160 106.745 160 120Z" fill="white" />
+  <path d="M136 110C131.582 110 128 113.582 128 118C128 124.5 136 130 136 130C136 130 144 124.5 144 118C144 113.582 140.418 110 136 110Z" fill="#4361EE" />
+  <circle cx="136" cy="118" r="3" fill="white" />
+</svg>
