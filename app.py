@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_file, session, 
 import os
 import sys
 import traceback
+import asyncio
 from dotenv import load_dotenv
 import json
 import time
@@ -10,6 +11,33 @@ from utils.pdf_generator import generate_pdf
 from agents.travel_agent import TravelAgent
 from agents.clean_real_flight_data import get_real_flight_data
 from flask_session import Session
+from playwright.async_api import async_playwright
+
+# Initialize Playwright browser instance
+playwright_instance = None
+browser_instance = None
+
+async def get_browser():
+    """Get or create a Playwright browser instance"""
+    global playwright_instance, browser_instance
+    
+    if not browser_instance or not browser_instance.is_connected():
+        playwright_instance = await async_playwright().start()
+        browser_instance = await playwright_instance.chromium.launch(headless=True)
+    
+    return browser_instance
+
+async def close_browser():
+    """Close the Playwright browser instance"""
+    global playwright_instance, browser_instance
+    
+    if browser_instance:
+        await browser_instance.close()
+        browser_instance = None
+    
+    if playwright_instance:
+        await playwright_instance.stop()
+        playwright_instance = None
 
 # Load environment variables
 load_dotenv()
@@ -560,6 +588,25 @@ def server_error(e):
     print(f"500 error: {e}")
     print(traceback.format_exc())
     return render_template('index.html', error="An internal server error occurred"), 500
+
+def run_async(coro):
+    """Run an async function in a sync context"""
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    try:
+        return loop.run_until_complete(coro)
+    finally:
+        loop.close()
+
+# Register cleanup on application exit
+import atexit
+
+def cleanup():
+    """Cleanup function to close the browser when the app exits"""
+    if browser_instance:
+        run_async(close_browser())
+
+atexit.register(cleanup)
 
 if __name__ == '__main__':
     # Configure the application to run
