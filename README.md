@@ -28,45 +28,7 @@ GeniTrip AI is a comprehensive travel planning web application that leverages ar
 - **PDF Generation**: xhtml2pdf
 - **Mapping**: Google Maps integration
 
-## Installation
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/genitrip-ai.git
-   cd genitrip-ai
-   ```
-
-2. Create and activate a virtual environment:
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. Install Playwright browsers:
-   ```
-   python -m playwright install
-   ```
-
-5. Create a `.env` file based on `.env.example` and add your API keys:
-   ```
-   SECRET_KEY=your-secret-key-for-sessions
-   GROQ_API_KEY=your-groq-api-key
-   ```
-
-6. Run the application:
-   ```
-   python app.py
-   ```
-
-7. Open your browser and navigate to:
-   ```
-   http://localhost:5000
-   ```
 
 ## Project Structure
 
