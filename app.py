@@ -447,7 +447,8 @@ def download_pdf():
                         clean_parts.append(str(summary['summary']).strip("'\"[]{}"))
                     
                     if 'traveldetails' in summary:
-                        clean_parts.append(f"Travel Details: {str(summary['traveldetails']).strip("'\"[]{}")}") 
+                       clean_parts.append(f"Travel Details: {str(summary['traveldetails']).strip('\'\"[]{}')}")
+ 
                     
                     if 'accommodation' in summary:
                         clean_parts.append(f"Accommodation: {str(summary['accommodation']).strip("'\"[]{}")}") 
