@@ -70,8 +70,7 @@ GeniTrip_AI_Project/
 - More personalization options based on user preferences
 
 ## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
 
 ## Contact
 
