@@ -76,4 +76,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) 
 
 Pavan Dadvaiah - pavannetha219@gmail.com
 
-Project Link: [https://github.com/yourusername/genitrip-ai](https://github.com/yourusername/genitrip-ai)
+Project Link: [https://github.com/yourusername/genitrip-ai](https://github.com/DadvaiahPavan/GeniTrip_AI)
